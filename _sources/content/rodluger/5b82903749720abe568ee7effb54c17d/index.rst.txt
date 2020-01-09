@@ -1,0 +1,64 @@
+.. _5b82903749720abe568ee7effb54c17d:
+
+Removing large files from git history
+=====================================
+
+.. note:: The original gist can be found at: `https://gist.github.com/5b82903749720abe568ee7effb54c17d <https://gist.github.com/5b82903749720abe568ee7effb54c17d>`_
+
+vplanet_bfg.md
+--------------
+
+Cleaning the vplanet repo
+=========================
+
+Most of what we need to know is
+`here <https://rtyley.github.io/bfg-repo-cleaner/>`__. First we
+`download
+BFG <http://repo1.maven.org/maven2/com/madgag/bfg/1.13.0/bfg-1.13.0.jar>`__
+and create the alias
+
+::
+
+   alias bfg='java -jar bfg-1.13.0.jar'
+
+Note that we need the latest version of the `Java Runtime
+Environment <http://www.oracle.com/technetwork/java/javase/downloads/jre10-downloads-4417026.html>`__
+installed.
+
+Let’s create a mirror (bare clone) of the bitbucket repo:
+
+::
+
+   git clone --mirror https://bitbucket.org/bitbucket_vpl/vplanet.git
+
+This might take a while! Our repo is pretty big. When that’s done,
+``cd`` into ``vplanet.git``. I found that I had to run
+
+::
+
+   git gc
+
+before doing anything else to force git to re-index the repo. Now we can
+run the commands described in the examples
+`here <https://rtyley.github.io/bfg-repo-cleaner/>`__. For instance, to
+remove all files larger than 100 MB from the history, ``cd`` out of the
+repository and run
+
+::
+
+   bfg --strip-blobs-bigger-than 100M vplanet.git
+
+All this did was to flag the offending files – nothing was deleted. You
+can check the logs to ensure that nothing bad happened. Once you’re
+happy, run
+
+::
+
+   cd vplanet.git
+   $ git reflog expire --expire=now --all && git gc --prune=now --aggressive
+
+and then, the super dangerous and final step,
+
+::
+
+   git push

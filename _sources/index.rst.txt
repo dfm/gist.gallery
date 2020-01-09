@@ -1,0 +1,11 @@
+gist.gallery
+=============
+
+.. toctree::
+   :maxdepth: 1
+
+   content/dfm/38be47ebf4ba3da8f7126cc802af52ec/index
+   content/dfm/e9d36037e363f04acbc668ec7c408237/index
+   content/dfm/5250dd2f17daf60cbe582ceeeb2fd12f/index
+   content/dfm/da1d0470d6fb54c63e6a913c1ef67a9e/index
+   content/rodluger/5b82903749720abe568ee7effb54c17d/index

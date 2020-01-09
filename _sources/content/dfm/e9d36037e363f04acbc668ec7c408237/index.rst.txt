@@ -1,0 +1,53 @@
+.. _e9d36037e363f04acbc668ec7c408237:
+
+A 'better' step function for matplotlib
+=======================================
+
+.. note:: The original gist can be found at: `https://gist.github.com/e9d36037e363f04acbc668ec7c408237 <https://gist.github.com/e9d36037e363f04acbc668ec7c408237>`_
+
+betterstep.py
+-------------
+
+::
+
+    import matplotlib.pyplot as plt
+    
+    def betterstep(bins, y, **kwargs):
+        """A 'better' version of matplotlib's step function
+        
+        Given a set of bin edges and bin heights, this plots the thing
+        that I wish matplotlib's ``step`` command plotted. All extra
+        arguments are passed directly to matplotlib's ``plot`` command.
+        
+        Args:
+            bins: The bin edges. This should be one element longer than
+                the bin heights array ``y``.
+            y: The bin heights.
+            ax (Optional): The axis where this should be plotted.
+        
+        """
+        new_x = [a for row in zip(bins[:-1], bins[1:]) for a in row]
+        new_y = [a for row in zip(y, y) for a in row]
+        ax = kwargs.pop("ax", plt.gca())
+        return ax.plot(new_x, new_y, **kwargs)
+
+
+demo.py
+-------
+
+::
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from betterstep import betterstep
+    
+    x = np.random.uniform(0, 2*np.pi, 500)
+    y = np.sin(x) + np.random.randn(len(x))
+    bins = np.linspace(0, 2*np.pi, 25)
+    num, _ = np.histogram(x, bins, weights=y)
+    denom, _ = np.histogram(x, bins)
+    
+    plt.plot(x, y, ".k", alpha=0.2)
+    betterstep(bins, num / denom, linewidth=2)
+
+

@@ -1,0 +1,242 @@
+.. _5250dd2f17daf60cbe582ceeeb2fd12f:
+
+.. note:: The original gist can be found at: `https://gist.github.com/5250dd2f17daf60cbe582ceeeb2fd12f <https://gist.github.com/5250dd2f17daf60cbe582ceeeb2fd12f>`_
+
+mixture.ipynb
+-------------
+
+.. code:: ipython3
+
+    %matplotlib inline
+
+.. code:: ipython3
+
+    import matplotlib.pyplot as plt
+    plt.style.use("default")
+    plt.rcParams["savefig.dpi"] = 100
+    plt.rcParams["figure.dpi"] = 100
+    plt.rcParams["font.size"] = 16
+    plt.rcParams["font.family"] = "sans-serif"
+    plt.rcParams["font.sans-serif"] = ["Liberation Sans"]
+    plt.rcParams["font.cursive"] = ["Liberation Sans"]
+    plt.rcParams["mathtext.fontset"] = "custom"
+
+.. code:: ipython3
+
+    import numpy as np
+    import pandas as pd
+    
+    import pymc3 as pm
+    import theano.tensor as tt
+
+.. code:: ipython3
+
+    # cut & pasted directly from the fetch_hogg2010test() function
+    # identical to the original dataset as hardcoded in the Hogg 2010 paper
+    
+    dfhogg = pd.DataFrame(
+                    np.array([[1, 201, 592, 61, 9, -0.84],
+                              [2, 244, 401, 25, 4, 0.31],
+                              [3, 47, 583, 38, 11, 0.64],
+                              [4, 287, 402, 15, 7, -0.27],
+                              [5, 203, 495, 21, 5, -0.33],
+                              [6, 58, 173, 15, 9, 0.67],
+                              [7, 210, 479, 27, 4, -0.02],
+                              [8, 202, 504, 14, 4, -0.05],
+                              [9, 198, 510, 30, 11, -0.84],
+                              [10, 158, 416, 16, 7, -0.69],
+                              [11, 165, 393, 14, 5, 0.30],
+                              [12, 201, 442, 25, 5, -0.46],
+                              [13, 157, 317, 52, 5, -0.03],
+                              [14, 131, 311, 16, 6, 0.50],
+                              [15, 166, 400, 34, 6, 0.73],
+                              [16, 160, 337, 31, 5, -0.52],
+                              [17, 186, 423, 42, 9, 0.90],
+                              [18, 125, 334, 26, 8, 0.40],
+                              [19, 218, 533, 16, 6, -0.78],
+                              [20, 146, 344, 22, 5, -0.56]]),
+                    columns=['id','x','y','sigma_y','sigma_x','rho_xy'])
+    
+    dfhogg['id'] = dfhogg['id'].apply(lambda x: 'p{}'.format(int(x)))
+    dfhogg.set_index('id', inplace=True)
+    dfhogg.head()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>x</th>
+          <th>y</th>
+          <th>sigma_y</th>
+          <th>sigma_x</th>
+          <th>rho_xy</th>
+        </tr>
+        <tr>
+          <th>id</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>p1</th>
+          <td>201.0</td>
+          <td>592.0</td>
+          <td>61.0</td>
+          <td>9.0</td>
+          <td>-0.84</td>
+        </tr>
+        <tr>
+          <th>p2</th>
+          <td>244.0</td>
+          <td>401.0</td>
+          <td>25.0</td>
+          <td>4.0</td>
+          <td>0.31</td>
+        </tr>
+        <tr>
+          <th>p3</th>
+          <td>47.0</td>
+          <td>583.0</td>
+          <td>38.0</td>
+          <td>11.0</td>
+          <td>0.64</td>
+        </tr>
+        <tr>
+          <th>p4</th>
+          <td>287.0</td>
+          <td>402.0</td>
+          <td>15.0</td>
+          <td>7.0</td>
+          <td>-0.27</td>
+        </tr>
+        <tr>
+          <th>p5</th>
+          <td>203.0</td>
+          <td>495.0</td>
+          <td>21.0</td>
+          <td>5.0</td>
+          <td>-0.33</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: ipython3
+
+    dfhoggs = ((dfhogg[['x', 'y']] - dfhogg[['x', 'y']].mean(0)) / 
+               (2 * dfhogg[['x', 'y']].std(0)))
+    dfhoggs['sigma_x'] = dfhogg['sigma_x'] / ( 2 * dfhogg['x'].std())
+    dfhoggs['sigma_y'] = dfhogg['sigma_y'] / ( 2 * dfhogg['y'].std())
+
+.. code:: ipython3
+
+    with pm.Model() as better_hogg:
+        
+        tsv_x = pm.Data('tsv_x', dfhoggs['x'])                  
+        tsv_y = pm.Data('tsv_y', dfhoggs['y'])                  
+        tsv_sigma_y = pm.Data('tsv_sigma_y', dfhoggs['sigma_y'])
+        
+        b0 = pm.Normal('b0_intercept', mu=0, sigma=10, testval=pm.floatX(0.1))
+        b1 = pm.Normal('b1_slope', mu=0, sigma=10, testval=pm.floatX(1.))
+        y_est_in = b0 + b1 * tsv_x
+        y_est_out = pm.Normal('y_est_out', mu=0, sigma=10, testval=pm.floatX(1.))
+        sigma_y_out = pm.HalfNormal('sigma_y_out', sigma=1, testval=pm.floatX(1.))
+       
+        # Inlier/outlier likelihoods
+        inlier_logl = pm.Normal.dist(mu=y_est_in, 
+                                     sigma=tsv_sigma_y).logp(tsv_y)
+    
+        outlier_logl = pm.Normal.dist(mu=y_est_out, 
+                                      sigma=tsv_sigma_y + sigma_y_out).logp(tsv_y)
+        
+        # This fraction is really the *prior* probability of having an outlier
+        frac_outliers = pm.Uniform('frac_outliers', lower=0.0, upper=0.5)
+        
+        # Apply this prior to compute the joint prob
+        inlier_logp = tt.log(1 - frac_outliers) + inlier_logl
+        outlier_logp = tt.log(frac_outliers) + outlier_logl
+        
+        # Marginalize
+        logp_marg = pm.math.logaddexp(
+            inlier_logp,
+            outlier_logp
+        )
+        pm.Potential('obs', logp_marg)
+        
+        # Track the probability that each point is an outlier
+        pm.Deterministic("logp_outlier", outlier_logp - logp_marg)
+
+.. code:: ipython3
+
+    with better_hogg:
+        trc_better = pm.sample(tune=3000, draws=3000, target_accept=0.9)
+
+
+.. parsed-literal::
+
+    Auto-assigning NUTS sampler...
+    Initializing NUTS using jitter+adapt_diag...
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [frac_outliers, sigma_y_out, y_est_out, b1_slope, b0_intercept]
+    Sampling 2 chains: 100%|██████████| 12000/12000 [00:09<00:00, 1219.40draws/s]
+
+
+.. code:: ipython3
+
+    import arviz as az
+    
+    rvs = ['b0_intercept', 'b1_slope', 'y_est_out', 'sigma_y_out', 'frac_outliers']
+    _ = az.plot_trace(trc_better, var_names=rvs, combined=False)
+
+
+
+.. image:: mixture_files/mixture_7_0.png
+
+
+.. code:: ipython3
+
+    plt.errorbar(dfhoggs['x'], dfhoggs['y'], yerr=dfhoggs['sigma_y'], fmt=",k", zorder=-1)
+    
+    p_outlier = np.exp(np.median(trc_better["logp_outlier"], axis=0))
+    
+    plt.scatter(dfhoggs['x'], dfhoggs['y'], c=p_outlier)
+    plt.colorbar(label="outlier probability")
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.colorbar.Colorbar at 0x11910f810>
+
+
+
+
+.. image:: mixture_files/mixture_8_1.png
+
+

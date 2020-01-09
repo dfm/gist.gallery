@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mixture.ipynb &mdash; gist.gallery 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="pymc3-demo.ipynb" href="../da1d0470d6fb54c63e6a913c1ef67a9e/" />
+    <link rel="prev" title="A ‘better’ step function for matplotlib" href="../e9d36037e363f04acbc668ec7c408237/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home"> gist.gallery
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../38be47ebf4ba3da8f7126cc802af52ec/">for_ruth.ipynb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../e9d36037e363f04acbc668ec7c408237/">A ‘better’ step function for matplotlib</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mixture.ipynb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../da1d0470d6fb54c63e6a913c1ef67a9e/">pymc3-demo.ipynb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rodluger/5b82903749720abe568ee7effb54c17d/">Removing large files from git history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rodluger/5b82903749720abe568ee7effb54c17d/#cleaning-the-vplanet-repo">Cleaning the vplanet repo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">gist.gallery</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../">Docs</a> &raquo;</li>
+        
+      <li>mixture.ipynb</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/content/dfm/5250dd2f17daf60cbe582ceeeb2fd12f/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition note" id="dd2f17daf60cbe582ceeeb2fd12f">
+<p class="admonition-title">Note</p>
+<p>The original gist can be found at: <a class="reference external" href="https://gist.github.com/5250dd2f17daf60cbe582ceeeb2fd12f">https://gist.github.com/5250dd2f17daf60cbe582ceeeb2fd12f</a></p>
+</div>
+<div class="section" id="mixture-ipynb">
+<h1>mixture.ipynb<a class="headerlink" href="#mixture-ipynb" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;savefig.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.family&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sans-serif&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.sans-serif&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Liberation Sans&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.cursive&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Liberation Sans&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;mathtext.fontset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="k">as</span> <span class="nn">tt</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cut &amp; pasted directly from the fetch_hogg2010test() function</span>
+<span class="c1"># identical to the original dataset as hardcoded in the Hogg 2010 paper</span>
+
+<span class="n">dfhogg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">592</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.84</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">244</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.31</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">583</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mf">0.64</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">287</span><span class="p">,</span> <span class="mi">402</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.27</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">203</span><span class="p">,</span> <span class="mi">495</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">479</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.02</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">198</span><span class="p">,</span> <span class="mi">510</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.84</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">416</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.69</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">393</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">442</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.46</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">317</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.03</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">166</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">0.73</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">337</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.52</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">186</span><span class="p">,</span> <span class="mi">423</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mf">0.90</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">334</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mf">0.40</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">19</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">533</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.78</span><span class="p">],</span>
+                          <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">146</span><span class="p">,</span> <span class="mi">344</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.56</span><span class="p">]]),</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;sigma_y&#39;</span><span class="p">,</span><span class="s1">&#39;sigma_x&#39;</span><span class="p">,</span><span class="s1">&#39;rho_xy&#39;</span><span class="p">])</span>
+
+<span class="n">dfhogg</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfhogg</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;p</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">dfhogg</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dfhogg</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>sigma_y</th>
+      <th>sigma_x</th>
+      <th>rho_xy</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>p1</th>
+      <td>201.0</td>
+      <td>592.0</td>
+      <td>61.0</td>
+      <td>9.0</td>
+      <td>-0.84</td>
+    </tr>
+    <tr>
+      <th>p2</th>
+      <td>244.0</td>
+      <td>401.0</td>
+      <td>25.0</td>
+      <td>4.0</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <th>p3</th>
+      <td>47.0</td>
+      <td>583.0</td>
+      <td>38.0</td>
+      <td>11.0</td>
+      <td>0.64</td>
+    </tr>
+    <tr>
+      <th>p4</th>
+      <td>287.0</td>
+      <td>402.0</td>
+      <td>15.0</td>
+      <td>7.0</td>
+      <td>-0.27</td>
+    </tr>
+    <tr>
+      <th>p5</th>
+      <td>203.0</td>
+      <td>495.0</td>
+      <td>21.0</td>
+      <td>5.0</td>
+      <td>-0.33</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfhoggs</span> <span class="o">=</span> <span class="p">((</span><span class="n">dfhogg</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]]</span> <span class="o">-</span> <span class="n">dfhogg</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span>
+           <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dfhogg</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+<span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;sigma_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfhogg</span><span class="p">[</span><span class="s1">&#39;sigma_x&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dfhogg</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;sigma_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfhogg</span><span class="p">[</span><span class="s1">&#39;sigma_y&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dfhogg</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">better_hogg</span><span class="p">:</span>
+
+    <span class="n">tsv_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s1">&#39;tsv_x&#39;</span><span class="p">,</span> <span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>
+    <span class="n">tsv_y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s1">&#39;tsv_y&#39;</span><span class="p">,</span> <span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+    <span class="n">tsv_sigma_y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s1">&#39;tsv_sigma_y&#39;</span><span class="p">,</span> <span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;sigma_y&#39;</span><span class="p">])</span>
+
+    <span class="n">b0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;b0_intercept&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">floatX</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;b1_slope&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">floatX</span><span class="p">(</span><span class="mf">1.</span><span class="p">))</span>
+    <span class="n">y_est_in</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">tsv_x</span>
+    <span class="n">y_est_out</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_est_out&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">floatX</span><span class="p">(</span><span class="mf">1.</span><span class="p">))</span>
+    <span class="n">sigma_y_out</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;sigma_y_out&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">floatX</span><span class="p">(</span><span class="mf">1.</span><span class="p">))</span>
+
+    <span class="c1"># Inlier/outlier likelihoods</span>
+    <span class="n">inlier_logl</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">y_est_in</span><span class="p">,</span>
+                                 <span class="n">sigma</span><span class="o">=</span><span class="n">tsv_sigma_y</span><span class="p">)</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="n">tsv_y</span><span class="p">)</span>
+
+    <span class="n">outlier_logl</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">y_est_out</span><span class="p">,</span>
+                                  <span class="n">sigma</span><span class="o">=</span><span class="n">tsv_sigma_y</span> <span class="o">+</span> <span class="n">sigma_y_out</span><span class="p">)</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="n">tsv_y</span><span class="p">)</span>
+
+    <span class="c1"># This fraction is really the *prior* probability of having an outlier</span>
+    <span class="n">frac_outliers</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;frac_outliers&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># Apply this prior to compute the joint prob</span>
+    <span class="n">inlier_logp</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">frac_outliers</span><span class="p">)</span> <span class="o">+</span> <span class="n">inlier_logl</span>
+    <span class="n">outlier_logp</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">frac_outliers</span><span class="p">)</span> <span class="o">+</span> <span class="n">outlier_logl</span>
+
+    <span class="c1"># Marginalize</span>
+    <span class="n">logp_marg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">logaddexp</span><span class="p">(</span>
+        <span class="n">inlier_logp</span><span class="p">,</span>
+        <span class="n">outlier_logp</span>
+    <span class="p">)</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;obs&#39;</span><span class="p">,</span> <span class="n">logp_marg</span><span class="p">)</span>
+
+    <span class="c1"># Track the probability that each point is an outlier</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;logp_outlier&quot;</span><span class="p">,</span> <span class="n">outlier_logp</span> <span class="o">-</span> <span class="n">logp_marg</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">better_hogg</span><span class="p">:</span>
+    <span class="n">trc_better</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tune</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">draws</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">target_accept</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [frac_outliers, sigma_y_out, y_est_out, b1_slope, b0_intercept]
+Sampling 2 chains: 100%|██████████| 12000/12000 [00:09&lt;00:00, 1219.40draws/s]
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+
+<span class="n">rvs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b0_intercept&#39;</span><span class="p">,</span> <span class="s1">&#39;b1_slope&#39;</span><span class="p">,</span> <span class="s1">&#39;y_est_out&#39;</span><span class="p">,</span> <span class="s1">&#39;sigma_y_out&#39;</span><span class="p">,</span> <span class="s1">&#39;frac_outliers&#39;</span><span class="p">]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trc_better</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="n">rvs</span><span class="p">,</span> <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../../_images/mixture_7_0.png" src="../../../_images/mixture_7_0.png" />
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;sigma_y&#39;</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;,k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">p_outlier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trc_better</span><span class="p">[</span><span class="s2">&quot;logp_outlier&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">dfhoggs</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">p_outlier</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;outlier probability&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">colorbar</span><span class="o">.</span><span class="n">Colorbar</span> <span class="n">at</span> <span class="mh">0x11910f810</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="../../../_images/mixture_8_1.png" src="../../../_images/mixture_8_1.png" />
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../da1d0470d6fb54c63e6a913c1ef67a9e/" class="btn btn-neutral float-right" title="pymc3-demo.ipynb" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../e9d36037e363f04acbc668ec7c408237/" class="btn btn-neutral float-left" title="A ‘better’ step function for matplotlib" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 Dan Foreman-Mackey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
