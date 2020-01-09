@@ -3,10 +3,11 @@ dependencies:
 - python=3.8
 - requests
 - ipython
+- pandoc
 - pip
 - pip:
   - nbconvert
   - black
   - flake8
-  - sphinx_typlog_theme
+  - sphinx_rtd_theme
   - sphinx

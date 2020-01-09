@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-
-import sphinx_typlog_theme
-
 
 extensions = [
     "sphinx.ext.mathjax",
@@ -32,18 +28,6 @@ release = "0.1"
 exclude_patterns = ["_build", "env"]
 pygments_style = "sphinx"
 
-# # HTML theme
-# # html_favicon = "_static/logo.png"
-# html_theme = "sphinx_typlog_theme"
-# html_theme_path = ["_themes", sphinx_typlog_theme.get_path()]
-# # html_theme_options = {"logo": "logo.png"}
-# # html_sidebars = {
-# #     "**": ["logo.html", "globaltoc.html", "relations.html", "searchbox.html"]
-# # }
-# html_static_path = ["_static"]
-
-# # Get the git branch name
-# html_context = dict(
-#     this_branch="master",
-#     this_version=os.environ.get("READTHEDOCS_VERSION", "latest"),
-# )
+# HTML theme
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]

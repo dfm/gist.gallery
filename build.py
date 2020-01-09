@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__all__ = []
-
 import os
 import sys
 import glob
@@ -12,16 +10,9 @@ import subprocess
 
 import requests
 
-# import nbformat
-# from nbconvert import HTMLExporter
-
-
-# html_exporter = HTMLExporter()
-# html_exporter.template_file = "basic"
 
 command = sys.executable + " -m nbconvert --to rst {0}"
 pandoc = "pandoc {0} -o {1}.rst"
-print(command)
 
 
 FORMATS = [
@@ -126,6 +117,13 @@ def get_gist(gist_id, content_dir="content"):
         if description:
             f.write("{0}\n".format(description).encode("utf-8"))
             f.write(("=" * len(description) + "\n\n").encode("utf-8"))
+
+        f.write(
+            (
+                ".. note:: The original gist can be found at: "
+                "`{0} <{0}>`_\n\n".format(data["html_url"])
+            ).encode("utf-8")
+        )
     if readme is not None:
         open(basefile, "ab").write(open(readme, "rb").read())
         os.remove(readme)
@@ -165,6 +163,4 @@ def generate_all(content_dir="content"):
 
 
 if __name__ == "__main__":
-    # get_gist("38be47ebf4ba3da8f7126cc802af52ec")
-    # get_gist("e9d36037e363f04acbc668ec7c408237")
     generate_all()
