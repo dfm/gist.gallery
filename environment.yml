@@ -1,0 +1,12 @@
+name: gallery
+dependencies:
+- python=3.8
+- requests
+- ipython
+- pip
+- pip:
+  - nbconvert
+  - black
+  - flake8
+  - sphinx_typlog_theme
+  - sphinx
