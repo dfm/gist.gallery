@@ -8,6 +8,11 @@ if [[ -n $CONDA ]]; then
 fi
 
 python build.py
+
+git add -f content/*
+git -c user.name='dfm' -c user.email='foreman.mackey@gmail.com' commit -m "adding content [ci skip]"
+git push https://dfm:$GITHUB_API_KEY@github.com/dfm/gist.gallery master
+
 make dirhtml
 
 mkdir gh-pages

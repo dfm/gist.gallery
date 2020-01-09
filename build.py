@@ -77,9 +77,8 @@ def get_gist(gist_id, content_dir="content"):
         "git clone --depth=1 {0} {1}".format(data["git_pull_url"], directory),
         shell=True,
     )
-    in_files = list(
-        sorted(set(glob.glob(os.path.join(directory, "*"))) - set([".git"]))
-    )
+    shutil.rmtree(os.path.join(directory, ".git"))
+    in_files = list(sorted(glob.glob(os.path.join(directory, "*"))))
 
     files = []
     filemap = {}
