@@ -4,7 +4,7 @@ set -e
 # Load the environment
 if [[ -n $CONDA ]]; then
     . $CONDA/etc/profile.d/conda.sh
-    conda activate starry
+    conda activate ./env
 fi
 
 python build.py
